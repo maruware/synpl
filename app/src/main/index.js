@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
 
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
@@ -38,4 +38,34 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
   }
+})
+
+// Exif
+const exif = require('exiftool')
+const fs = require('fs')
+ipcMain.on('requestFileExif', (event, arg) => {
+  console.log('requestFileExif arg', arg)
+  const sender = event.sender
+  const path = arg
+
+  fs.readFile(path, (err, data) => {
+    if (err) {
+      sender.send(`errorFileExif-${path}`, err)
+      return
+    }
+    exif.metadata(data, (err, metadata) => {
+      if (err) {
+        sender.send(`errorFileExif-${path}`, err)
+      } else {
+        console.log('metadata', metadata)
+        const res = {
+          mediaCreateDate: metadata.mediaCreateDate,
+          mediaDuration: metadata.mediaDuration,
+          imageWidth: metadata.imageWidth,
+          imageHeight: metadata.imageHeight
+        }
+        sender.send(`receiveFileExif-${path}`, res)
+      }
+    })
+  })
 })
