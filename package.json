@@ -14,8 +14,8 @@
     "postinstall": "npm run lint:fix && cd app && npm install"
   },
   "build": {
-    "productName": "ElectronVue",
-    "appId": "org.simulatedgreg.electron-vue",
+    "productName": "synpl",
+    "appId": "com.maruware.synpl",
     "category": "public.app-category.tools",
     "dmg": {
       "contents": [
@@ -49,7 +49,7 @@
       ]
     }
   },
-  "author": "Greg Holguin <simulatedgreg@gmail.com>",
+  "author": "maruware <me@maruware.com>",
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.8.0",
