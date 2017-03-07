@@ -39,10 +39,12 @@
     width: 100%;
     height: 100%;
 
-    vertical-align: middle;
+    display: flex;
 
     img {
+      margin: auto;
       width: 100%;
+      height: auto;
     }
   }
 </style>
