@@ -17,7 +17,7 @@
         console.log('t', t)
         const idx = this.content.photos.findIndex(p => {
           const diff = Math.abs(p.metadata.date - t)
-          return diff < 1000
+          return diff < 500
         })
         this.photoIdx = idx
       })
