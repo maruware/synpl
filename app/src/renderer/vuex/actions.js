@@ -7,12 +7,41 @@ const dummyVideo = document.createElement('video')
 
 const {ipcRenderer} = require('electron')
 
+const parseDuration = (mediaDuration) => {
+  let m = mediaDuration.match(/^([0-9]+):([0-9]+):([0-9]+)$/)
+  if (m) {
+    return (parseInt(m[1]) * 60 + parseInt(m[2])) * 60 + parseInt(m[3])
+  }
+  m = mediaDuration.match(/^([0-9]+\.[0-9]+) s$/)
+  if (m) {
+    return parseFloat(m[1])
+  }
+}
+
+const parseDate = (date) => {
+  let m = date.match(/^([0-9]+:[0-9]+:[0-9]+) ([0-9]+:[0-9]+:[0-9]+(.[0-9]+)?)$/)
+  if (m) {
+    const date = m[1].replace(':', '-', 'g')
+    const time = m[2]
+    console.log('date', `${date} ${time}`)
+    return new Date(`${date} ${time}`)
+  } else {
+    throw new Error('Bad date')
+  }
+}
+
 const getFileExif = (file) => {
   const path = file.path
   return new Promise((resolve, reject) => {
     const fn = (event, metadata) => {
-      console.log('metadata', metadata)
       ipcRenderer.removeListener(`receiveFileExif-${path}`, fn)
+
+      // 消毒
+      if (metadata.duration) {
+        metadata.duration = parseDuration(metadata.duration)
+      }
+      metadata.date = parseDate(metadata.date)
+      console.log('metadata', metadata)
       resolve(metadata)
     }
     ipcRenderer.on(`receiveFileExif-${path}`, fn)
@@ -40,14 +69,17 @@ const photoContentPromise = (files) => {
   const promises = files.map(file => getFileExif(file))
   return Promise.all(promises)
   .then(metadatas => {
+    const photos = files.map((f, idx) => {
+      return {
+        src: URL.createObjectURL(f),
+        metadata: metadatas[idx]
+      }
+    }).sort((a, b) => {
+      return a.metadata.date - b.metadata.date
+    })
     return {
       type: 'photo',
-      photos: files.map((f, idx) => {
-        return {
-          src: URL.createObjectURL(f),
-          metadata: metadatas[idx]
-        }
-      })
+      photos: photos
     }
   })
 }

@@ -2,6 +2,7 @@ import * as types from '../mutation-types'
 
 const state = {
   items: [],
+  startAt: null,
   duration: 0,
   currentTime: 0,
   playing: false
@@ -10,6 +11,7 @@ const state = {
 const mutations = {
   [types.SET_CONTENT] (state, { content }) {
     if (state.items.length === 0) {
+      state.startAt = content.video.metadata.date
       state.duration = content.video.metadata.duration
     }
     state.items.push(content)

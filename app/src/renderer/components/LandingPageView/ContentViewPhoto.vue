@@ -1,14 +1,34 @@
 <template lang="pug">
   div.frame
-    img(v-bind:src="content.photos[0].src")
+    img(v-bind:src="currentSrc")
 </template>
 
 <script>
   export default {
-    props: ['content', 'time'],
+    props: ['content', 'currentTime', 'startAt', 'duration'],
+    data () {
+      return {
+        photoIdx: -1
+      }
+    },
+    created () {
+      this.$store.watch(state => state.contents.currentTime, (val) => {
+        const t = new Date(this.startAt.getTime() + Math.round(val * 1000))
+        console.log('t', t)
+        const idx = this.content.photos.findIndex(p => {
+          const diff = Math.abs(p.metadata.date - t)
+          return diff < 1000
+        })
+        this.photoIdx = idx
+      })
+    },
     computed: {
-      current () {
-        return this.content.photos[0].src
+      currentSrc () {
+        console.log('photoIdx', this.photoIdx)
+        if (this.photoIdx < 0) {
+          return ''
+        }
+        return this.content.photos[this.photoIdx].src
       }
     }
   }

@@ -6,7 +6,6 @@
   export default {
     props: ['content', 'currentTime'],
     created () {
-      // console.log(this.$store.getters.currentTime)
       this.$store.watch(state => state.contents.currentTime, (val) => {
         this.$el.currentTime = val
       })

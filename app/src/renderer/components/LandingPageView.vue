@@ -1,6 +1,6 @@
 <template lang="pug">
   div.landing-page-view
-    content-view-group.content-view-group(v-bind:contents="contents" v-bind:current-time="currentTime")
+    content-view-group.content-view-group(v-bind:contents="contents" v-bind:current-time="currentTime" v-bind:start-at="startAt" v-bind:duration="duration")
     sequences-panel.sequences-panel(v-bind:contents="contents" v-bind:current-time="currentTime" v-bind:playing="playing")
 </template>
 
@@ -16,6 +16,8 @@
     name: 'landing-page',
     computed: mapGetters({
       contents: 'contents',
+      startAt: 'startAt',
+      duration: 'duration',
       currentTime: 'currentTime',
       playing: 'playing'
     })
