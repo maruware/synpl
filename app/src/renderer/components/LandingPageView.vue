@@ -31,7 +31,6 @@
 
     .content-view-group {
       width: 100%;
-      // margin-bottom: -140px;
       height: 70%;
     }
     .sequences-panel {

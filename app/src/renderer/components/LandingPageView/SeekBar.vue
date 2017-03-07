@@ -40,7 +40,7 @@ div.seq
   input[type=range].seq-slider {
     -webkit-appearance: none;
     width: 100%;
-    margin: 14.6px 0;
+    margin: 8.6px 0;
   }
   input[type=range].seq-slider:focus {
     outline: none;
@@ -60,13 +60,13 @@ div.seq
   input[type=range].seq-slider::-webkit-slider-thumb {
     box-shadow: 1px 1px 1px #aaaaaa, 0px 0px 1px #b7b7b7;
     border: 1px solid #555555;
-    height: 36px;
+    height: 24px;
     width: 16px;
     border-radius: 3px;
     background: #ffffff;
     cursor: pointer;
     -webkit-appearance: none;
-    margin-top: -14.6px;
+    margin-top: -8.6px;
   }
   input[type=range].seq-slider:focus::-webkit-slider-runnable-track {
     background: #05d8d8;
@@ -112,7 +112,7 @@ div.seq
   input[type=range].seq-slider::-ms-thumb {
     box-shadow: 1px 1px 1px #aaaaaa, 0px 0px 1px #b7b7b7;
     border: 1px solid #555555;
-    height: 36px;
+    height: 24px;
     width: 16px;
     border-radius: 3px;
     background: #ffffff;
