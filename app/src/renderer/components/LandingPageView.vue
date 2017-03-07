@@ -31,8 +31,8 @@
 
     .content-view-group {
       width: 100%;
-      height: auto;
-      min-height: 70%;
+      margin-bottom: -140px;
+      min-height: 100%;
     }
     .sequences-panel {
       position: absolute;
