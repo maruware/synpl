@@ -1,19 +1,22 @@
 <template lang="pug">
-  video.frame(v-bind:src="content.video.src", v-on:timeupdate="videoTimeUpdate")
+  div.frame
+    video(v-bind:src="content.video.src", v-on:timeupdate="videoTimeUpdate")
+
 </template>
 
 <script>
   export default {
     props: ['content', 'currentTime'],
-    created () {
+    mounted () {
+      const videoEl = this.$el.querySelector('video')
       this.$store.watch(state => state.contents.seekedTime, (val) => {
-        this.$el.currentTime = val
+        videoEl.currentTime = val
       })
       this.$store.watch(state => state.contents.playing, (playing) => {
         if (playing) {
-          this.$el.play()
+          videoEl.play()
         } else {
-          this.$el.pause()
+          videoEl.pause()
         }
       })
     },
@@ -30,5 +33,10 @@
   .frame {
     width: 100%;
     height: 100%;
+
+    video {
+      width: 100%;
+      height: auto;
+    }
   }
 </style>

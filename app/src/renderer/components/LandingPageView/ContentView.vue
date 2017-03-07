@@ -1,5 +1,6 @@
 <template lang="pug">
   div.content-box
+    h2.desc {{content.idx}}. {{content.type}}
     content-view-video(v-if="isVideo", :content="content", :current-time="currentTime", :start-at="startAt", :duration="duration")
     content-view-photo(v-if="isPhoto", :content="content", :current-time="currentTime", :start-at="startAt", :duration="duration")
 </template>
@@ -28,10 +29,15 @@
   .content-box {
     width: 100%;
     height: 100%;
-    background: #555555;
+    background: #222;
 
-    p {
-      color: white;
+    box-sizing:border-box;
+    border: 3px solid #eee;
+    // padding: 3px;
+
+    .desc {
+      top: 5px;
+      color: #eee;
     }
   }
 </style>

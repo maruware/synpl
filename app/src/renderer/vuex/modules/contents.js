@@ -15,6 +15,7 @@ const mutations = {
       state.startAt = content.video.metadata.date
       state.duration = content.video.metadata.duration
     }
+    content.idx = state.items.length
     state.items.push(content)
   },
   [types.REMOVE_CONTENT] (state, { idx }) {

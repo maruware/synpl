@@ -14,7 +14,6 @@
     created () {
       this.$store.watch(state => state.contents.currentTime, (val) => {
         const t = new Date(this.startAt.getTime() + Math.round(val * 1000))
-        console.log('t', t)
         const idx = this.content.photos.findIndex(p => {
           const diff = Math.abs(p.metadata.date - t)
           return diff < 500
