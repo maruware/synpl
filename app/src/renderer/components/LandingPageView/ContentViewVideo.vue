@@ -1,19 +1,26 @@
 <template lang="pug">
-  video.frame(v-bind:src="content.video.src")
+  video.frame(v-bind:src="content.video.src", v-on:timeupdate="videoTimeUpdate")
 </template>
 
 <script>
   export default {
     props: ['content', 'currentTime'],
     created () {
-      this.$store.watch(state => state.contents.currentTime, (val) => {
+      this.$store.watch(state => state.contents.seekedTime, (val) => {
         this.$el.currentTime = val
       })
+      this.$store.watch(state => state.contents.playing, (playing) => {
+        if (playing) {
+          this.$el.play()
+        } else {
+          this.$el.pause()
+        }
+      })
     },
-    watch: {
-      // currentTime (val, oldVal) {
-      //   console.log('watch currentTime')
-      // }
+    methods: {
+      videoTimeUpdate (e) {
+        this.$store.dispatch('videoAdvanced', e.target.currentTime)
+      }
     }
 
   }

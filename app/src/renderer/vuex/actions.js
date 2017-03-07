@@ -107,37 +107,27 @@ export const removeContent = ({ commit }) => {
   commit(types.REMOVE_CONTENT)
 }
 
-var intervalId = null
-
 export const play = ({ commit, state }) => {
   if (state.contents.duration <= 0) {
     window.alert('No item')
     return
   }
   commit(types.CHANGE_PLAYING, {playing: true})
-  intervalId = setInterval(() => {
-    if (state.contents.currentTime >= state.contents.duration) {
-      pause({commit})
-    }
-    commit(types.SEEK, {time: state.contents.currentTime + 0.1})
-  }, 100)
 }
 
 export const pause = ({ commit }) => {
-  if (intervalId) {
-    clearInterval(intervalId)
-    commit(types.CHANGE_PLAYING, {playing: false})
-  }
+  commit(types.CHANGE_PLAYING, {playing: false})
 }
 
 export const stop = ({ commit }) => {
-  if (intervalId) {
-    clearInterval(intervalId)
-    commit(types.CHANGE_PLAYING, {playing: false})
-  }
+  commit(types.CHANGE_PLAYING, {playing: false})
   commit(types.SEEK, {time: 0})
 }
 
 export const seek = ({ commit }, time) => {
   commit(types.SEEK, {time: time})
+}
+
+export const videoAdvanced = ({ commit }, currentTime) => {
+  commit(types.VIDEO_ADVANCED, {time: currentTime})
 }

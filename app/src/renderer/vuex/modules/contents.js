@@ -4,7 +4,8 @@ const state = {
   items: [],
   startAt: null,
   duration: 0,
-  currentTime: 0,
+  seekedTime: 0,
+  currentTime: null,
   playing: false
 }
 
@@ -21,6 +22,11 @@ const mutations = {
   },
 
   [types.SEEK] (state, { time }) {
+    state.seekedTime = time
+    state.currentTime = time
+  },
+
+  [types.VIDEO_ADVANCED] (state, { time }) {
     state.currentTime = time
   },
 

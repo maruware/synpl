@@ -1,7 +1,7 @@
 <template lang="pug">
   div.content-box
-    content-view-video(v-if="isVideo", v-bind:content="content" v-bind:current-time="currentTime" v-bind:start-at="startAt" v-bind:duration="duration")
-    content-view-photo(v-if="isPhoto", v-bind:content="content" v-bind:current-time="currentTime" v-bind:start-at="startAt" v-bind:duration="duration")
+    content-view-video(v-if="isVideo", :content="content", :current-time="currentTime", :start-at="startAt", :duration="duration")
+    content-view-photo(v-if="isPhoto", :content="content", :current-time="currentTime", :start-at="startAt", :duration="duration")
 </template>
 
 <script>
@@ -12,7 +12,7 @@
       ContentViewVideo,
       ContentViewPhoto
     },
-    props: ['content', 'currentTime', 'startAt', 'duration'],
+    props: ['content', 'currentTime', 'startAt', 'duration', 'playing'],
     computed: {
       isVideo: function () {
         return this.content.type === 'video'

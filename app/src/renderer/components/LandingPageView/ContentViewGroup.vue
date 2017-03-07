@@ -1,7 +1,7 @@
 <template lang="pug">
   div.content-view-group
     div.content-item(v-for="content in contents" v-bind:class="itemClass")
-      content-view(v-bind:content="content" v-bind:current-time="currentTime" v-bind:start-at="startAt" v-bind:duration="duration")
+      content-view(:content="content", :current-time="currentTime", :start-at="startAt", :duration="duration", :playing="playing")
 
 </template>
 
@@ -11,7 +11,7 @@
     components: {
       ContentView
     },
-    props: ['contents', 'currentTime', 'startAt', 'duration'],
+    props: ['contents', 'currentTime', 'startAt', 'duration', 'playing'],
     computed: {
       itemClass () {
         return {
@@ -32,6 +32,7 @@
 
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 
     .content-item {
       &.half-width {
