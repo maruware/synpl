@@ -4,6 +4,20 @@
 </template>
 
 <script>
+  const findMin = (ary, fn) => {
+    let minElem = null
+    let minVal = Infinity
+    let minIdx = 0
+    ary.forEach((e, i) => {
+      const v = fn(e)
+      if (v < minVal) {
+        minVal = v
+        minElem = e
+        minIdx = i
+      }
+    })
+    return {e: minElem, v: minVal, i: minIdx}
+  }
   export default {
     props: ['content', 'currentTime', 'startAt', 'duration'],
     data () {
@@ -14,11 +28,15 @@
     created () {
       this.$store.watch(state => state.contents.currentTime, (val) => {
         const t = new Date(this.startAt.getTime() + Math.round(val * 1000))
-        const idx = this.content.photos.findIndex(p => {
+        const {v, i} = findMin(this.content.photos, p => {
           const diff = Math.abs(p.metadata.date - t)
-          return diff < 500
+          return diff
         })
-        this.photoIdx = idx
+        if (v > 500) {
+          this.photoIdx = -1
+        } else {
+          this.photoIdx = i
+        }
       })
     },
     computed: {
