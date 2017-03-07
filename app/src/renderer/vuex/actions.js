@@ -137,3 +137,7 @@ export const stop = ({ commit }) => {
   }
   commit(types.SEEK, {time: 0})
 }
+
+export const seek = ({ commit }, time) => {
+  commit(types.SEEK, {time: time})
+}

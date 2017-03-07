@@ -1,7 +1,7 @@
 <template lang="pug">
   div.landing-page-view
     content-view-group.content-view-group(v-bind:contents="contents" v-bind:current-time="currentTime" v-bind:start-at="startAt" v-bind:duration="duration")
-    sequences-panel.sequences-panel(v-bind:contents="contents" v-bind:current-time="currentTime" v-bind:playing="playing")
+    sequences-panel.sequences-panel(:contents="contents", :current-time="currentTime", :playing="playing", :duration="duration")
 </template>
 
 <script>
@@ -31,11 +31,14 @@
 
     .content-view-group {
       width: 100%;
-      height: 70%;
+      height: auto;
+      min-height: 70%;
     }
     .sequences-panel {
+      position: absolute;
+      bottom: 0;
       width: 100%;
-      height: 30%;
+      height: 140px;
     }
   }
 </style>
