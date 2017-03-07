@@ -17,7 +17,7 @@ div.seq
 
 <style scoped lang="scss">
   .seq {
-    height: 50%;
+    height: auto;
   }
   .prop-panel {
     width: 48px;

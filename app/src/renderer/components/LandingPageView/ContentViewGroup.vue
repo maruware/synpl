@@ -1,7 +1,7 @@
 <template lang="pug">
   div.content-view-group
     div.content-item(v-for="content in contents" v-bind:class="itemClass")
-      content-view(v-bind:content="content")
+      content-view(v-bind:content="content" v-bind:current-time="currentTime")
 
 </template>
 
@@ -11,7 +11,7 @@
     components: {
       ContentView
     },
-    props: ['contents'],
+    props: ['contents', 'currentTime'],
     computed: {
       itemClass () {
         return {

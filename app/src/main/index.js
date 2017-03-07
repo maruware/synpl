@@ -41,6 +41,16 @@ app.on('activate', () => {
 })
 
 // Exif
+const parseMediaDuration = (mediaDuration) => {
+  let m = mediaDuration.match(/^([0-9]+):([0-9]+):([0-9]+)$/)
+  if (m) {
+    return (parseInt(m[1]) * 60 + parseInt(m[2])) * 60 + parseInt(m[3])
+  }
+  m = mediaDuration.match(/^([0-9]+\.[0-9]+) s$/)
+  if (m) {
+    return parseFloat(m[1])
+  }
+}
 const exif = require('exiftool')
 const fs = require('fs')
 ipcMain.on('requestFileExif', (event, arg) => {
@@ -60,9 +70,9 @@ ipcMain.on('requestFileExif', (event, arg) => {
         console.log('metadata', metadata)
         const res = {
           mediaCreateDate: metadata.mediaCreateDate,
-          mediaDuration: metadata.mediaDuration,
-          imageWidth: metadata.imageWidth,
-          imageHeight: metadata.imageHeight
+          duration: parseMediaDuration(metadata.mediaDuration) || null,
+          width: metadata.imageWidth,
+          height: metadata.imageHeight
         }
         sender.send(`receiveFileExif-${path}`, res)
       }

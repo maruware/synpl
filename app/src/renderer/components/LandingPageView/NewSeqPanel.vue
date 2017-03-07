@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.new-seq-panel(v-on:dragover="fileDragging" v-on:drop="fileDropped")
+  div._new-seq-panel(v-on:dragover="fileDragging" v-on:drop="fileDropped")
     p Drag video or photos here
 </template>
 
@@ -27,8 +27,8 @@
 </script>
 
 <style scoped lang="scss">
-  .new-seq-panel {
-    height: 48px;
+  ._new-seq-panel {
+    width: 100%;
     background-color: #aaaaaa;
 
     text-align: center;

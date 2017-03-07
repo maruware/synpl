@@ -11,6 +11,7 @@ const getFileExif = (file) => {
   const path = file.path
   return new Promise((resolve, reject) => {
     const fn = (event, metadata) => {
+      console.log('metadata', metadata)
       ipcRenderer.removeListener(`receiveFileExif-${path}`, fn)
       resolve(metadata)
     }
@@ -72,4 +73,35 @@ export const setContent = ({ commit }, files) => {
 
 export const removeContent = ({ commit }) => {
   commit(types.REMOVE_CONTENT)
+}
+
+var intervalId = null
+
+export const play = ({ commit, state }) => {
+  if (state.contents.duration <= 0) {
+    window.alert('No item')
+    return
+  }
+  commit(types.CHANGE_PLAYING, {playing: true})
+  intervalId = setInterval(() => {
+    if (state.contents.currentTime >= state.contents.duration) {
+      pause({commit})
+    }
+    commit(types.SEEK, {time: state.contents.currentTime + 0.1})
+  }, 100)
+}
+
+export const pause = ({ commit }) => {
+  if (intervalId) {
+    clearInterval(intervalId)
+    commit(types.CHANGE_PLAYING, {playing: false})
+  }
+}
+
+export const stop = ({ commit }) => {
+  if (intervalId) {
+    clearInterval(intervalId)
+    commit(types.CHANGE_PLAYING, {playing: false})
+  }
+  commit(types.SEEK, {time: 0})
 }
