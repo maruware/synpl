@@ -1,22 +1,28 @@
 <template lang="pug">
   div.seqs-panel
-    seq-controller.controller(v-bind:playing="playing")
-    sequence.sequence(:current-time="currentTime", :duration="duration")
-    new-seq-panel.new-seq-panel
+    div.controls
+      seq-controller.controller(v-bind:playing="playing")
+      new-seq-panel.new-seq-panel
+    seek-bar.sequence(:current-time="currentTime", :duration="duration")
+    div.seqs
+      sequence.sequence(v-for="content in contents", :duration="duration", :startAt="startAt", :content="content")
+
 
 </template>
 
 <script>
   import SeqController from './SeqController'
+  import SeekBar from './SeekBar'
   import Sequence from './Sequence'
   import NewSeqPanel from './NewSeqPanel'
   export default {
     components: {
       SeqController,
-      Sequence,
-      NewSeqPanel
+      SeekBar,
+      NewSeqPanel,
+      Sequence
     },
-    props: ['contents', 'playing', 'currentTime', 'duration'],
+    props: ['contents', 'playing', 'currentTime', 'duration', 'startAt'],
     computed: {
       itemClass (content) {
         return {
@@ -31,15 +37,29 @@
     width: 100%;
     background-color: #cccccc;
   }
-  .controller {
-    height: 40px;
-  }
   .sequence {
     height: 52px;
   }
-  .new-seq-panel {
-    vertical-align: bottom;
+  .controls {
+    display: flex;
+    flex-display: row;
+    .controller {
+      width: 30%;
+      height: 40px;
+    }
+    .new-seq-panel {
+      width: 70%;
+      vertical-align: bottom;
+      height: auto;
+      min-height: 48px;
+    }
+  }
+  .seqs {
+    width: 100%;
     height: auto;
-    min-height: 48px;
+
+    .sequence {
+      margin-bottom: 4px;
+    }
   }
 </style>
