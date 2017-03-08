@@ -14,7 +14,7 @@
     "postinstall": "npm run lint:fix && cd app && npm install"
   },
   "build": {
-    "productName": "synpl",
+    "productName": "Synpl",
     "appId": "com.maruware.synpl",
     "category": "public.app-category.tools",
     "dmg": {

@@ -1,4 +1,4 @@
-# synpl
+# Synpl
 
 > Sync play videos and photos
 
