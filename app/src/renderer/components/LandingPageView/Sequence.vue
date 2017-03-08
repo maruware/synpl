@@ -46,8 +46,7 @@ div.sequence
 .sequence {
   width: 100%;
   height: 24px;
-  // display: table-cell;
-  // vertical-align: middle;
+  background-color: #555;
 
   display: flex;
   flex-direction: row;
@@ -55,7 +54,7 @@ div.sequence
 .range {
   top: 25%;
   position: absolute;
-  background-color: #304269;
+  background-color: #151515;
   height: 50%;
 }
 
@@ -67,7 +66,7 @@ div.sequence
 
 .seq-timeline {
   width: 100%;
-  background-color: #91BED4;
+  // background-color: #91BED4;
   position: relative;
 }
 </style>

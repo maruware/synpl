@@ -29,7 +29,7 @@
   .content-box {
     width: 100%;
     height: 100%;
-    background: #222;
+    // background: #020202;
 
     box-sizing:border-box;
     border: 3px solid #eee;

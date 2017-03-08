@@ -29,7 +29,7 @@
 <style scoped lang="scss">
   .seqs-panel {
     width: 100%;
-    background-color: #cccccc;
+    background-color: #333;
   }
   .sequence {
     height: 52px;
@@ -50,6 +50,7 @@
   }
   .seek-bar {
     margin-left: 24px;
+    width: calc(100% - 24px);
   }
   .seqs {
     width: 100%;

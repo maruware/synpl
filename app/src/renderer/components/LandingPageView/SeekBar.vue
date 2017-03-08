@@ -37,11 +37,10 @@ div.seq
 
 <style scoped lang="scss">
   .seq {
-    width: 100%;
   }
-  // .seq-slider {
-  //   margin: 16px 12px;
-  // }
+
+  $tack-bg: #efefef;
+
   input[type=range].seq-slider {
     -webkit-appearance: none;
     width: 100%;
@@ -58,7 +57,7 @@ div.seq
     height: 6.8px;
     cursor: pointer;
     box-shadow: 1px 1px 1px #aaaaaa, 0px 0px 1px #b7b7b7;
-    background: #04bfbf;
+    background: $tack-bg;
     border-radius: 15.8px;
     border: 0px solid #010101;
   }
@@ -81,7 +80,7 @@ div.seq
     height: 6.8px;
     cursor: pointer;
     box-shadow: 1px 1px 1px #aaaaaa, 0px 0px 1px #b7b7b7;
-    background: #04bfbf;
+    background: $tack-bg;
     border-radius: 15.8px;
     border: 0px solid #010101;
   }
@@ -109,7 +108,7 @@ div.seq
     box-shadow: 1px 1px 1px #aaaaaa, 0px 0px 1px #b7b7b7;
   }
   input[type=range].seq-slider::-ms-fill-upper {
-    background: #04bfbf;
+    background: $tack-bg;
     border: 0px solid #010101;
     border-radius: 31.6px;
     box-shadow: 1px 1px 1px #aaaaaa, 0px 0px 1px #b7b7b7;
@@ -125,7 +124,7 @@ div.seq
     height: 6.8px;
   }
   input[type=range].seq-slider:focus::-ms-fill-lower {
-    background: #04bfbf;
+    background: $tack-bg;
   }
   input[type=range].seq-slider:focus::-ms-fill-upper {
     background: #05d8d8;
