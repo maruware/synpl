@@ -86,6 +86,7 @@ const photoContentPromise = (files) => {
 
 export const setContent = ({ commit }, files) => {
   console.log('setContent files', files)
+  commit(types.CHANGE_LOADING, {loading: true})
   let contentPromise = null
   // video
   if (files.length === 1 && dummyVideo.canPlayType(files[0].type)) {
@@ -100,6 +101,7 @@ export const setContent = ({ commit }, files) => {
   contentPromise
   .then(content => {
     commit(types.SET_CONTENT, {content: content})
+    commit(types.CHANGE_LOADING, {loading: false})
   })
 }
 
@@ -131,3 +133,4 @@ export const seek = ({ commit }, time) => {
 export const videoAdvanced = ({ commit }, currentTime) => {
   commit(types.VIDEO_ADVANCED, {time: currentTime})
 }
+

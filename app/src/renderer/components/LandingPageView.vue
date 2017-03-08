@@ -20,7 +20,19 @@
       duration: 'duration',
       currentTime: 'currentTime',
       playing: 'playing'
-    })
+    }),
+    mounted () {
+      let spinner = null
+      this.$store.watch(state => state.app.loading, (loading) => {
+        if (loading) {
+          spinner = this.$loading({fullscreen: true})
+        } else {
+          if (spinner) {
+            spinner.close()
+          }
+        }
+      })
+    }
   }
 </script>
 
