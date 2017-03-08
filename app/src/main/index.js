@@ -43,6 +43,13 @@ app.on('activate', () => {
 // Exif
 const exif = require('exiftool')
 const fs = require('fs')
+const path = require('path')
+// TODO: Support win, linux
+const exiftoolPath = process.env.NODE_ENV === 'development'
+  ? path.join(__dirname, '../../bin/osx/exiftool')
+  : path.join(process.resourcesPath, 'app/bin/osx/exiftool')
+console.log('exiftoolPath', exiftoolPath)
+console.log('process.cwd()', process.cwd())
 ipcMain.on('requestFileExif', (event, arg) => {
   console.log('requestFileExif arg', arg)
   const sender = event.sender
@@ -53,7 +60,7 @@ ipcMain.on('requestFileExif', (event, arg) => {
       sender.send(`errorFileExif-${path}`, err)
       return
     }
-    exif.metadata(data, (err, metadata) => {
+    exif.metadata(data, [], exiftoolPath, (err, metadata) => {
       if (err) {
         sender.send(`errorFileExif-${path}`, err)
       } else {

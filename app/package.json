@@ -4,6 +4,7 @@
   "description": "Sync play videos and photos",
   "main": "./dist/main.js",
   "dependencies": {
+    "exiftool": "git@github.com:maruware/exiftool.git",
     "vue": "^2.1.10",
     "vue-electron": "^1.0.6",
     "vue-resource": "^1.0.3",

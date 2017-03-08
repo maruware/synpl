@@ -37,6 +37,9 @@
       "node_modules/",
       "package.json"
     ],
+    "extraResources": [
+      "app/bin/"
+    ],
     "mac": {
       "icon": "app/icons/icon.icns"
     },
@@ -99,6 +102,5 @@
     "webpack-dev-server": "^2.3.0"
   },
   "dependencies": {
-    "exiftool": "0.0.3"
   }
 }
