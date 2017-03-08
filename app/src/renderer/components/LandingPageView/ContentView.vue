@@ -1,6 +1,6 @@
 <template lang="pug">
   div.content-box
-    h2.desc {{content.idx}}. {{content.type}}
+    h2.desc {{content.idx}} ({{content.type}})
     content-view-video(v-if="isVideo", :content="content", :current-time="currentTime", :start-at="startAt", :duration="duration")
     content-view-photo(v-if="isPhoto", :content="content", :current-time="currentTime", :start-at="startAt", :duration="duration")
 </template>
@@ -36,6 +36,7 @@
     // padding: 3px;
 
     .desc {
+      position: absolute;
       top: 5px;
       color: #eee;
     }
