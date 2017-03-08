@@ -1,7 +1,10 @@
 <template lang="pug">
 
 div.sequence
-  div.range(v-for="range in ranges", :style="range.style")
+  div.seq-label
+    | {{ content.idx }}
+  div.seq-timeline
+    div.range(v-for="range in ranges", :style="range.style")
 </template>
 
 <script>
@@ -43,15 +46,28 @@ div.sequence
 .sequence {
   width: 100%;
   height: 24px;
-  background-color: #91BED4;
   // display: table-cell;
   // vertical-align: middle;
-  position: relative;
+
+  display: flex;
+  flex-direction: row;
 }
 .range {
   top: 25%;
   position: absolute;
   background-color: #304269;
   height: 50%;
+}
+
+.seq-label {
+  width: 20px;
+  margin-left: 4px;
+  // color: #fff;
+}
+
+.seq-timeline {
+  width: 100%;
+  background-color: #91BED4;
+  position: relative;
 }
 </style>

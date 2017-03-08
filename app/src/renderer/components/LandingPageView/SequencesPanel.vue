@@ -3,7 +3,7 @@
     div.controls
       seq-controller.controller(v-bind:playing="playing")
       new-seq-panel.new-seq-panel
-    seek-bar.sequence(:current-time="currentTime", :duration="duration")
+    seek-bar.seek-bar(:current-time="currentTime", :duration="duration")
     div.seqs
       sequence.sequence(v-for="content in contents", :duration="duration", :startAt="startAt", :content="content")
 
@@ -54,6 +54,9 @@
       min-height: 48px;
     }
   }
+  .seek-bar {
+    margin-left: 24px;
+  }
   .seqs {
     width: 100%;
     height: auto;
@@ -61,5 +64,6 @@
     .sequence {
       margin-bottom: 4px;
     }
+
   }
 </style>
