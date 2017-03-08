@@ -22,13 +22,7 @@
       NewSeqPanel,
       Sequence
     },
-    props: ['contents', 'playing', 'currentTime', 'duration', 'startAt'],
-    computed: {
-      itemClass (content) {
-        return {
-        }
-      }
-    }
+    props: ['contents', 'playing', 'currentTime', 'duration', 'startAt']
   }
 </script>
 
