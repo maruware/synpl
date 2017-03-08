@@ -1,6 +1,6 @@
 <template lang="pug">
 div.seq
-  input.seq-slider(type="range", :value="sliderVal", @change="changedSlider", :disabled="!enableSlider")
+  input.seq-slider(type="range", :value="sliderVal", @change="changedSlider", :disabled="!enableSlider", :max="max")
 
 </template>
 
@@ -9,6 +9,11 @@ div.seq
     components: {
     },
     props: ['content', 'currentTime', 'duration'],
+    data () {
+      return {
+        max: 600
+      }
+    },
     computed: {
       enableSlider () {
         console.log('this.duration', this.duration)
@@ -18,13 +23,13 @@ div.seq
         if (this.duration === 0) {
           return 0
         }
-        return Math.round(this.currentTime * 100 / this.duration)
+        return Math.round(this.currentTime * this.max / this.duration)
       }
     },
     methods: {
       changedSlider (e) {
         const percent = e.target.value
-        this.$store.dispatch('seek', this.duration * percent / 100)
+        this.$store.dispatch('seek', this.duration * percent / this.max)
       }
     }
   }
