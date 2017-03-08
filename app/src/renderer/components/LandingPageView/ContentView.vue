@@ -29,12 +29,13 @@
   .content-box {
     width: 100%;
     height: 100%;
-    // background: #020202;
+    background: #000;
 
     box-sizing:border-box;
     border: 3px solid #eee;
     // padding: 3px;
 
+    position: relative;
     .desc {
       position: absolute;
       top: 5px;
