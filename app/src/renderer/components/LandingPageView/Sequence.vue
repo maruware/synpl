@@ -3,6 +3,9 @@
 div.sequence
   div.seq-label
     | {{ content.idx }}
+  div.seq-ctrl
+    div.pause-switch(v-if="isPhoto", :class="{on: enabledStepSuspend}", @click="toggleStepSuspend")
+      i.fa.fa-step-forward
   div.seq-timeline
     div.range(v-for="range in ranges", :style="range.style")
 </template>
@@ -34,9 +37,20 @@ div.sequence
             }
           })
         }
+      },
+      isPhoto () {
+        return this.content.type === 'photo'
+      },
+      enabledStepSuspend () {
+        return this.content.stepSuspend
       }
     },
     methods: {
+      toggleStepSuspend () {
+        const contentIdx = this.content.idx
+        const enable = !this.content.stepSuspend
+        this.$store.dispatch('changeStepSuspend', {contentIdx, enable})
+      }
     }
   }
 </script>
@@ -59,8 +73,8 @@ div.sequence
 }
 
 .seq-label {
-  width: 20px;
-  margin-left: 4px;
+  width: 16px;
+  margin-left: 2px;
   // color: #fff;
 }
 
@@ -68,5 +82,26 @@ div.sequence
   width: 100%;
   // background-color: #91BED4;
   position: relative;
+}
+
+.seq-ctrl {
+  width: 18px;
+  margin-right: 4px;
+  height: 100%;
+
+  .pause-switch {
+    margin-top: 3px;
+    height: 18px;
+    color: #bbb;
+    font-size: 10pt;
+    border-radius: 3px;
+    text-align: center;
+
+
+    &.on {
+      background-color: #333;
+      box-shadow:0px 0px 1px 1px #111 inset;
+    }
+  }
 }
 </style>

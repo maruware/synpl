@@ -33,6 +33,15 @@ const mutations = {
 
   [types.CHANGE_PLAYING] (state, { playing }) {
     state.playing = playing
+  },
+
+  [types.CHANGE_STEP_SUSPEND] (state, { contentIdx, enable }) {
+    state.items = state.items.map((item) => {
+      if (item.idx === contentIdx) {
+        item.stepSuspend = enable
+      }
+      return item
+    })
   }
 }
 

@@ -49,8 +49,8 @@
     }
   }
   .seek-bar {
-    margin-left: 24px;
-    width: calc(100% - 24px);
+    margin-left: calc(18px + 22px);
+    width: calc(100% - 18px - 22px);
   }
   .seqs {
     width: 100%;

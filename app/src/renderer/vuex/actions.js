@@ -118,6 +118,7 @@ export const setContentWithText = ({ commit }, { text, date }) => {
 
   contentPromise
   .then(content => {
+    content.stepSuspend = false
     commit(types.SET_CONTENT, {content: content})
   })
 }
@@ -138,6 +139,7 @@ export const setContentWithFiles = ({ commit }, files) => {
   }
   contentPromise
   .then(content => {
+    content.stepSuspend = false
     commit(types.SET_CONTENT, {content: content})
     commit(types.CHANGE_LOADING, {loading: false})
   })
@@ -170,5 +172,9 @@ export const seek = ({ commit }, time) => {
 
 export const videoAdvanced = ({ commit }, currentTime) => {
   commit(types.VIDEO_ADVANCED, {time: currentTime})
+}
+
+export const changeStepSuspend = ({ commit }, { contentIdx, enable }) => {
+  commit(types.CHANGE_STEP_SUSPEND, { contentIdx, enable })
 }
 

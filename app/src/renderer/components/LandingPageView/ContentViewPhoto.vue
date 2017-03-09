@@ -32,10 +32,19 @@
           const diff = Math.abs(p.metadata.date - t)
           return diff
         })
+        // Not match
         if (v > 500) {
           this.photoIdx = -1
-        } else {
-          this.photoIdx = i
+          return
+        }
+
+        if (this.photoIdx === i) {
+          return
+        }
+
+        this.photoIdx = i
+        if (this.content.stepSuspend) {
+          this.$store.dispatch('pause')
         }
       })
     },
