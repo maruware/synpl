@@ -15,12 +15,25 @@
         e.dataTransfer.dropEffect = 'copy'
       },
       fileDropped (e) {
+        console.log('fileDropped', e.dataTransfer.getData('Text'))
         e.stopPropagation()
         e.preventDefault()
 
-        const files = e.dataTransfer.files
-        console.log('files', files)
-        this.$store.dispatch('setContent', files)
+        const text = e.dataTransfer.getData('Text')
+        if (text) {
+          this.$prompt('Input date', 'Tip', {
+            confirmButtonText: 'OK',
+            cancelButtonText: 'Cancel'
+          })
+          .then(r => {
+            const date = new Date(r.value)
+            this.$store.dispatch('setContentWithText', { text, date })
+          })
+        } else {
+          const files = e.dataTransfer.files
+          console.log('files', files)
+          this.$store.dispatch('setContentWithFiles', files)
+        }
       }
     }
   }

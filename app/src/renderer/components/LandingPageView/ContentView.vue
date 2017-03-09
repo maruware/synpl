@@ -3,15 +3,18 @@
     h2.desc {{content.idx}} ({{content.type}})
     content-view-video(v-if="isVideo", :content="content", :current-time="currentTime", :start-at="startAt", :duration="duration")
     content-view-photo(v-if="isPhoto", :content="content", :current-time="currentTime", :start-at="startAt", :duration="duration")
+    content-view-youtube(v-if="isYoutube", :content="content", :current-time="currentTime", :start-at="startAt", :duration="duration")
 </template>
 
 <script>
   import ContentViewVideo from './ContentViewVideo'
   import ContentViewPhoto from './ContentViewPhoto'
+  import ContentViewYoutube from './ContentViewYoutube'
   export default {
     components: {
       ContentViewVideo,
-      ContentViewPhoto
+      ContentViewPhoto,
+      ContentViewYoutube
     },
     props: ['content', 'currentTime', 'startAt', 'duration', 'playing'],
     computed: {
@@ -20,6 +23,9 @@
       },
       isPhoto: function () {
         return this.content.type === 'photo'
+      },
+      isYoutube: function () {
+        return this.content.type === 'youtube'
       }
     }
   }
@@ -40,6 +46,8 @@
       position: absolute;
       top: 5px;
       color: #eee;
+
+      z-index: 100;
     }
   }
 </style>

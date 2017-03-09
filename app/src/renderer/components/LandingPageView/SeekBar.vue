@@ -1,14 +1,18 @@
 <template lang="pug">
 div.seq
   input.seq-slider(type="range", :value="sliderVal", @change="changedSlider", :disabled="!enableSlider", :max="max")
+  div.time-labels
+    span.start-at-label {{ startAtText }}
+    span.end-at-label {{ endAtText }}
 
 </template>
 
 <script>
+  import moment from 'moment'
   export default {
     components: {
     },
-    props: ['content', 'currentTime', 'duration'],
+    props: ['content', 'currentTime', 'duration', 'startAt'],
     data () {
       return {
         max: 600
@@ -24,6 +28,17 @@ div.seq
           return 0
         }
         return Math.round(this.currentTime * this.max / this.duration)
+      },
+      startAtText () {
+        console.log('startAtText', this.startAt)
+        return this.startAt ? moment(this.startAt).format() : null
+      },
+      endAtText () {
+        if (!this.startAt) {
+          return null
+        }
+        const t = new Date(this.startAt.getTime() + this.duration * 1000)
+        return moment(t).format()
       }
     },
     methods: {
@@ -36,7 +51,13 @@ div.seq
 </script>
 
 <style scoped lang="scss">
-  .seq {
+  .time-labels {
+    position: relative;
+    color: #eee;
+    .end-at-label {
+      position: absolute;
+      right: 0px;
+    }
   }
 
   $tack-bg: #efefef;

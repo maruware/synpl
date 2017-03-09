@@ -3,7 +3,7 @@
     div.controls
       seq-controller.controller(v-bind:playing="playing")
       new-seq-panel.new-seq-panel
-    seek-bar.seek-bar(:current-time="currentTime", :duration="duration")
+    seek-bar.seek-bar(:current-time="currentTime", :duration="duration", :startAt="startAt")
     div.seqs
       sequence.sequence(v-for="content in contents", :duration="duration", :startAt="startAt", :content="content")
 

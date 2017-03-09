@@ -35,6 +35,8 @@
     flex-wrap: wrap;
 
     .content-item {
+      width: 100%;
+      height: 100%;
       &.half-width {
         width: 50%;
       }

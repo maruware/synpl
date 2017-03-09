@@ -1,4 +1,5 @@
 import * as types from './mutation-types'
+const youtubeParser = require('youtube-parser')
 
 FileList.prototype.every = Array.prototype.every
 FileList.prototype.map = Array.prototype.map
@@ -84,7 +85,44 @@ const photoContentPromise = (files) => {
   })
 }
 
-export const setContent = ({ commit }, files) => {
+const youtubeContent = (text, date) => {
+  return youtubeParser.getMetadata(text)
+  .then(m => {
+    console.log('metadata', m)
+    return {
+      type: 'youtube',
+      video: {
+        url: text,
+        metadata: {
+          id: m.video_id,
+          duration: parseInt(m.length_seconds),
+          date
+        }
+      }
+    }
+  })
+  .catch(err => {
+    console.error(err)
+  })
+}
+
+export const setContentWithText = ({ commit }, { text, date }) => {
+  let contentPromise = null
+  if (text.match(/^https:\/\/www\.youtube\.com\/.*$/)) {
+    console.log('match')
+    contentPromise = youtubeContent(text, date)
+  } else {
+    window.alert('Bad URL')
+    return
+  }
+
+  contentPromise
+  .then(content => {
+    commit(types.SET_CONTENT, {content: content})
+  })
+}
+
+export const setContentWithFiles = ({ commit }, files) => {
   console.log('setContent files', files)
   commit(types.CHANGE_LOADING, {loading: true})
   let contentPromise = null

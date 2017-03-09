@@ -32,11 +32,16 @@
 <style scoped lang="scss">
   .frame {
     width: 100%;
-    height: 100%;
+    position: relative;
+    // height: 100%;
 
     video {
       width: 100%;
-      height: auto;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      // height: auto;
     }
   }
 </style>
