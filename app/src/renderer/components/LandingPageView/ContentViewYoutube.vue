@@ -23,6 +23,17 @@
         this.fitPlayer()
         this.setupTimeUpdate(player)
       })
+      player.on('stateChange', (e) => {
+        const state = e.data
+        switch (state) {
+          case 1:
+            this.$store.dispatch('play')
+            break
+          case 2:
+            this.$store.dispatch('pause')
+            break
+        }
+      })
 
       this.$store.watch(state => state.contents.seekedTime, (val) => {
         player.seekTo(val)
