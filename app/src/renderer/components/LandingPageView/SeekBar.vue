@@ -1,6 +1,6 @@
 <template lang="pug">
 div.seq
-  input.seq-slider(type="range", :value="sliderVal", @change="changedSlider", :disabled="!enableSlider", :max="max")
+  input.seq-slider(type="range", :value="sliderVal", @input="changedSlider", :disabled="!enableSlider", :max="max")
   div.time-labels
     span.start-at-label {{ startAtText }}
     span.end-at-label {{ endAtText }}
@@ -15,7 +15,7 @@ div.seq
     props: ['content', 'currentTime', 'duration', 'startAt'],
     data () {
       return {
-        max: 600
+        max: 2000
       }
     },
     computed: {
