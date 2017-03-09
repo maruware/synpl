@@ -20,6 +20,7 @@
       })
 
       player.on('ready', () => {
+        this.fitPlayer()
         setInterval(() => {
           player.getCurrentTime()
           .then(t => this.$store.dispatch('videoAdvanced', t))
@@ -38,10 +39,32 @@
           player.pauseVideo()
         }
       })
+
+      // resizeに応じてplayerサイズ変更
+      window.addEventListener('resize', (e) => {
+        this.fitPlayer()
+      })
     },
     methods: {
       videoTimeUpdate (e) {
         this.$store.dispatch('videoAdvanced', e.target.currentTime)
+      },
+      fitPlayer () {
+        const w = this.$el.clientWidth
+        const h = this.$el.clientHeight
+
+        const p = this.$el.querySelector('#yt-player')
+        let dw = 0
+        let dh = 0
+        if ((w / h) > (1920 / 1080)) {
+          dh = h
+          dw = h * 1920 / 1080
+        } else {
+          dw = w
+          dh = w * 1080 / 1920
+        }
+        p.setAttribute('width', dw)
+        p.setAttribute('height', dh)
       }
     }
 
@@ -51,14 +74,9 @@
 <style lang="scss">
   .yt-frame {
     width: 100%;
-    position: relative;
-    padding-top: 56.25%;
-  }
-  #yt-player {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100% !important;
-    height: 100% !important;
+    height: 100%;
+
+    max-height: 100%;
+    text-align: center;
   }
 </style>
