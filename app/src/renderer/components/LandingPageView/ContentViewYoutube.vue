@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.frame
+  div.yt-frame
     div#yt-player()
 
 </template>
@@ -27,6 +27,7 @@
       })
 
       this.$store.watch(state => state.contents.seekedTime, (val) => {
+        console.log('seekTo', val)
         player.seekTo(val)
       })
       // timeupdateがないのでsetIntervalでやる
@@ -48,7 +49,7 @@
 </script>
 
 <style lang="scss">
-  .frame {
+  .yt-frame {
     width: 100%;
     position: relative;
     padding-top: 56.25%;

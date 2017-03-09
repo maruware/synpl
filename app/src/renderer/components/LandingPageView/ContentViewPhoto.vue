@@ -54,14 +54,14 @@
 <style scoped lang="scss">
   .frame {
     width: 100%;
-    height: 100%;
-
-    display: flex;
+    position: relative;
 
     img {
-      margin: auto;
       width: 100%;
       height: auto;
+      position: absolute;
+      left: 0;
+      top: 0;
     }
   }
 </style>

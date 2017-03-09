@@ -33,15 +33,14 @@
   .frame {
     width: 100%;
     position: relative;
-    // height: 100%;
+    height: 100%;
 
     video {
+      max-height: 100%;
       width: 100%;
-      height: 100%;
       position: absolute;
       left: 0;
       top: 0;
-      // height: auto;
     }
   }
 </style>
