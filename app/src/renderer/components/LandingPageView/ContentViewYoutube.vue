@@ -21,14 +21,10 @@
 
       player.on('ready', () => {
         this.fitPlayer()
-        setInterval(() => {
-          player.getCurrentTime()
-          .then(t => this.$store.dispatch('videoAdvanced', t))
-        }, 100)
+        this.setupTimeUpdate(player)
       })
 
       this.$store.watch(state => state.contents.seekedTime, (val) => {
-        console.log('seekTo', val)
         player.seekTo(val)
       })
       // timeupdateがないのでsetIntervalでやる
@@ -65,6 +61,12 @@
         }
         p.setAttribute('width', dw)
         p.setAttribute('height', dh)
+      },
+      setupTimeUpdate (player) {
+        setInterval(() => {
+          player.getCurrentTime()
+          .then(t => this.$store.dispatch('videoAdvanced', t))
+        }, 100)
       }
     }
 
