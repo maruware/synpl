@@ -4,6 +4,8 @@ div.seq
   div.time-labels
     span.start-at-label {{ startAtText }}
     span.end-at-label {{ endAtText }}
+    div.time-counter
+      span.current-at-label {{ currentAtText }}
 
 </template>
 
@@ -33,6 +35,9 @@ div.seq
         console.log('startAtText', this.startAt)
         return this.startAt ? moment(this.startAt).format() : null
       },
+      currentAtText () {
+        return this.startAt ? moment(this.startAt).add(this.currentTime, 's').format('H:mm:ss.S') : null
+      },
       endAtText () {
         if (!this.startAt) {
           return null
@@ -54,9 +59,23 @@ div.seq
   .time-labels {
     position: relative;
     color: #eee;
+    font-size: 10pt;
     .end-at-label {
       position: absolute;
       right: 0px;
+    }
+
+    .time-counter {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .current-at-label {
+      width: 100%;
     }
   }
 

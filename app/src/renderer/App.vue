@@ -17,7 +17,7 @@
 </script>
 
 <style lang="scss">
-  @import url(https://fonts.googleapis.com/css?family=Lato:300);
+  @import url(https://fonts.googleapis.com/css?family=Lato:300,700);
 
   * {
     margin: 0;
@@ -41,6 +41,7 @@
     /*background-position: center;*/
     display: flex;
     font-family: Lato, Helvetica, sans-serif;
+    font-weight: 300;
     /*justify-content: center;
     text-align: center;*/
 
