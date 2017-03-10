@@ -42,7 +42,6 @@ app.on('activate', () => {
 
 // Exif
 const exif = require('exiftool')
-const fs = require('fs')
 const path = require('path')
 // TODO: Support win, linux
 const exiftoolPath = process.env.NODE_ENV === 'development'
@@ -55,24 +54,19 @@ ipcMain.on('requestFileExif', (event, arg) => {
   const sender = event.sender
   const path = arg
 
-  fs.readFile(path, (err, data) => {
+  exif.metadata(path, [], exiftoolPath, (err, metadata) => {
     if (err) {
+      console.error('Exif error')
       sender.send(`errorFileExif-${path}`, err)
-      return
-    }
-    exif.metadata(data, [], exiftoolPath, (err, metadata) => {
-      if (err) {
-        sender.send(`errorFileExif-${path}`, err)
-      } else {
-        console.log('metadata', metadata)
-        const res = {
-          date: metadata.mediaCreateDate || metadata['date/timeOriginal'],
-          duration: metadata.mediaDuration || null,
-          width: metadata.imageWidth,
-          height: metadata.imageHeight
-        }
-        sender.send(`receiveFileExif-${path}`, res)
+    } else {
+      console.log('metadata', metadata)
+      const res = {
+        date: metadata.mediaCreateDate || metadata['date/timeOriginal'],
+        duration: metadata.mediaDuration || null,
+        width: metadata.imageWidth,
+        height: metadata.imageHeight
       }
-    })
+      sender.send(`receiveFileExif-${path}`, res)
+    }
   })
 })
