@@ -9,6 +9,8 @@ const state = {
   playing: false
 }
 
+const initialState = Object.assign({}, state)
+
 const mutations = {
   [types.SET_CONTENT] (state, { content }) {
     if (state.items.length === 0) {
@@ -18,8 +20,12 @@ const mutations = {
     content.idx = state.items.length
     state.items.push(content)
   },
-  [types.REMOVE_CONTENT] (state, { idx }) {
-    state.items[idx] = null
+  [types.CLEAR_CONTENTS] (state) {
+    state.items = []
+    state.startAt = initialState.startAt
+    state.duration = initialState.duration
+    state.seekedTime = initialState.currentTime
+    state.playing = initialState.playing
   },
 
   [types.SEEK] (state, { time }) {

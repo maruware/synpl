@@ -101,9 +101,6 @@ const youtubeContent = (text, date) => {
       }
     }
   })
-  .catch(err => {
-    console.error(err)
-  })
 }
 
 const setContentDefault = (content) => {
@@ -114,13 +111,7 @@ const setContentDefault = (content) => {
 }
 
 export const setContentWithText = ({ commit }, { text, date }) => {
-  let contentPromise = null
-  if (text.match(/^https:\/\/www\.youtube\.com\/.*$/)) {
-    console.log('match')
-    contentPromise = youtubeContent(text, date)
-  } else {
-    return Promise.reject({msg: 'Bad URL'})
-  }
+  const contentPromise = youtubeContent(text, date)
 
   return contentPromise
   .then(content => {
@@ -152,8 +143,8 @@ export const setContentWithFiles = ({ commit }, files) => {
   })
 }
 
-export const removeContent = ({ commit }) => {
-  commit(types.REMOVE_CONTENT)
+export const clearContents = ({ commit }) => {
+  commit(types.CLEAR_CONTENTS)
 }
 
 export const play = ({ commit, state }) => {

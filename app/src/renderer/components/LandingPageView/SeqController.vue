@@ -2,11 +2,13 @@
   div.seq-controller
     el-button(v-on:click="play" v-if="!playing")
       i.fa.fa-play
-    el-button(v-on:click="pause" v-if="playing")
+    el-button(v-on:click="pause" v-else)
       i.fa.fa-pause
     el-button(v-on:click="stop")
       i.fa.fa-stop
 
+    el-button(v-on:click="clear")
+      i.fa.fa-eject
 </template>
 
 <script>
@@ -21,6 +23,9 @@
       },
       stop () {
         this.$store.dispatch('stop')
+      },
+      clear () {
+        this.$store.dispatch('clearContents')
       }
     }
   }
