@@ -52,7 +52,6 @@
     },
     computed: {
       currentSrc () {
-        console.log('photoIdx', this.photoIdx)
         if (this.photoIdx < 0) {
           return ''
         }
