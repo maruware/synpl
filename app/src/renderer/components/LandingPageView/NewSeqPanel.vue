@@ -1,7 +1,7 @@
 <template lang="pug">
   div._new-seq-panel(@dragenter="enter", @dragover="dragging", @drop="dropped", @dragleave="leave")
-    p(v-if="!isDragging") Drag video or photos here
-    p(v-else) Drop
+    span(v-if="!isDragging") Drag video or photos here
+    span(v-else) Drop
 </template>
 
 <script>
@@ -54,12 +54,18 @@
 </script>
 
 <style scoped lang="scss">
-  ._new-seq-panel {
+  div._new-seq-panel {
     width: 100%;
     background-color: #aaaaaa;
 
     text-align: center;
     font-size: 20pt;
     color: #555555;
+
+    span {
+      height: 100%;
+      vertical-align: middle;
+    }
+
   }
 </style>

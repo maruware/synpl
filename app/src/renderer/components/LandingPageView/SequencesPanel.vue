@@ -43,7 +43,7 @@
     }
     .new-seq-panel {
       width: 70%;
-      vertical-align: bottom;
+      // vertical-align: bottom;
       height: auto;
       min-height: 48px;
     }
