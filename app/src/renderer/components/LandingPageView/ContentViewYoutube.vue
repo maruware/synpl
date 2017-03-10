@@ -1,5 +1,6 @@
 <template lang="pug">
   div.yt-frame
+    resize-observer(@notify="onResize")
     div#yt-player()
 
 </template>
@@ -47,15 +48,13 @@
           player.pauseVideo()
         }
       })
-
-      // resizeに応じてplayerサイズ変更
-      window.addEventListener('resize', (e) => {
-        this.fitPlayer()
-      })
     },
     methods: {
       videoTimeUpdate (e) {
         this.$store.dispatch('videoAdvanced', e.target.currentTime)
+      },
+      onResize (e) {
+        this.fitPlayer()
       },
       fitPlayer () {
         const w = this.$el.clientWidth

@@ -11,10 +11,13 @@ import 'element-ui/lib/theme-default/index.css'
 
 import 'font-awesome/css/font-awesome.css'
 
+import { ResizeObserver } from 'vue-resize'
+
 Vue.use(Electron)
 Vue.use(Resource)
 Vue.use(Router)
 Vue.use(ElementUI)
+Vue.component('resize-observer', ResizeObserver)
 Vue.config.debug = true
 
 const router = new Router({
