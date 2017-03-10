@@ -106,6 +106,13 @@ const youtubeContent = (text, date) => {
   })
 }
 
+const setContentDefault = (content) => {
+  return Object.assign(content, {
+    stepSuspend: false,
+    offset: 0
+  })
+}
+
 export const setContentWithText = ({ commit }, { text, date }) => {
   let contentPromise = null
   if (text.match(/^https:\/\/www\.youtube\.com\/.*$/)) {
@@ -118,7 +125,7 @@ export const setContentWithText = ({ commit }, { text, date }) => {
 
   contentPromise
   .then(content => {
-    content.stepSuspend = false
+    content = setContentDefault(content)
     commit(types.SET_CONTENT, {content: content})
   })
 }
@@ -139,7 +146,7 @@ export const setContentWithFiles = ({ commit }, files) => {
   }
   contentPromise
   .then(content => {
-    content.stepSuspend = false
+    content = setContentDefault(content)
     commit(types.SET_CONTENT, {content: content})
     commit(types.CHANGE_LOADING, {loading: false})
   })
@@ -176,5 +183,9 @@ export const videoAdvanced = ({ commit }, currentTime) => {
 
 export const changeStepSuspend = ({ commit }, { contentIdx, enable }) => {
   commit(types.CHANGE_STEP_SUSPEND, { contentIdx, enable })
+}
+
+export const setOffset = ({ commit }, { contentIdx, offset }) => {
+  commit(types.SET_OFFSET, { contentIdx, offset })
 }
 

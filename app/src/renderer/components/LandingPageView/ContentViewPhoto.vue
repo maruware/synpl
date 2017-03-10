@@ -26,14 +26,15 @@
       }
     },
     created () {
-      this.$store.watch(state => state.contents.currentTime, (val) => {
-        const t = new Date(this.startAt.getTime() + Math.round(val * 1000))
-        const {v, i} = findMin(this.content.photos, p => {
-          const diff = Math.abs(p.metadata.date - t)
+      this.$store.watch(state => state.contents.currentTime, (curr) => {
+        const offset = this.content.offset
+        const t = new Date(this.startAt.getTime() + Math.round(curr * 1000))
+        const {e, v, i} = findMin(this.content.photos, p => {
+          const diff = Math.abs(p.metadata.date - t + (offset * 1000))
           return diff
         })
         // Not match
-        if (v > 500) {
+        if (v > 300) {
           this.photoIdx = -1
           return
         }
@@ -45,6 +46,7 @@
         this.photoIdx = i
         if (this.content.stepSuspend) {
           this.$store.dispatch('pause')
+          this.$store.dispatch('seek', (e.metadata.date - this.startAt.getTime()) / 1000 + offset)
         }
       })
     },

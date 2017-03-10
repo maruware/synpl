@@ -4,15 +4,27 @@ div.sequence
   div.seq-label
     | {{ content.idx }}
   div.seq-ctrl
-    div.pause-switch(v-if="isPhoto", :class="{on: enabledStepSuspend}", @click="toggleStepSuspend")
+    div.seq-btn.pause-switch(v-if="isPhoto", :class="{on: enabledStepSuspend}", @click="toggleStepSuspend")
       i.fa.fa-step-forward
+    div.seq-btn.settings-btn(v-if="isPhoto", @click="openSettings")
+      i.fa.fa-cog
   div.seq-timeline
     div.range(v-for="range in ranges", :style="range.style")
+  seq-settings(:content="content", :visible="settingsVisible", @cancel="cancelSettings", @submit="saveSettings")
 </template>
 
 <script>
+  import SeqSettings from './SeqSettings'
   export default {
+    components: {
+      SeqSettings
+    },
     props: ['content', 'duration', 'startAt'],
+    data () {
+      return {
+        settingsVisible: false
+      }
+    },
     computed: {
       ranges () {
         if (this.content.type === 'video') {
@@ -28,7 +40,8 @@ div.sequence
         }
         if (this.content.type === 'photo') {
           return this.content.photos.map(p => {
-            const leftPercent = (p.metadata.date - this.startAt) * 100 / 1000 / this.duration
+            const offsetMs = this.content.offset * 1000
+            const leftPercent = 100 * (p.metadata.date - this.startAt + offsetMs) / (this.duration * 1000)
             return {
               style: {
                 'left': `${leftPercent}%`,
@@ -50,6 +63,17 @@ div.sequence
         const contentIdx = this.content.idx
         const enable = !this.content.stepSuspend
         this.$store.dispatch('changeStepSuspend', {contentIdx, enable})
+      },
+      openSettings () {
+        this.settingsVisible = true
+      },
+      saveSettings (e) {
+        const contentIdx = this.content.idx
+        this.$store.dispatch('setOffset', {contentIdx, offset: e.offset})
+        this.settingsVisible = false
+      },
+      cancelSettings () {
+        this.settingsVisible = false
       }
     }
   }
@@ -85,19 +109,24 @@ div.sequence
 }
 
 .seq-ctrl {
-  width: 18px;
+  width: 38px;
   margin-right: 4px;
   height: 100%;
 
-  .pause-switch {
+  display: flex;
+  flex-direction: row;
+
+  .seq-btn {
+    width: 18px;
     margin-top: 3px;
     height: 18px;
     color: #bbb;
     font-size: 10pt;
     border-radius: 3px;
     text-align: center;
+  }
 
-
+  .pause-switch {
     &.on {
       background-color: #333;
       box-shadow:0px 0px 1px 1px #111 inset;

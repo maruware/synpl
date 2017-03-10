@@ -18,6 +18,7 @@
           controls: 0
         }
       })
+      player.setPlaybackQuality('hd1080')
 
       player.on('ready', () => {
         this.fitPlayer()

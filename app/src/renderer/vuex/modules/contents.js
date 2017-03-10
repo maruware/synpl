@@ -42,6 +42,15 @@ const mutations = {
       }
       return item
     })
+  },
+
+  [types.SET_OFFSET] (state, { contentIdx, offset }) {
+    state.items = state.items.map((item) => {
+      if (item.idx === contentIdx) {
+        item.offset = offset
+      }
+      return item
+    })
   }
 }
 
