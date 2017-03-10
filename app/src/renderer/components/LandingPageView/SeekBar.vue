@@ -112,9 +112,6 @@ div.seq
     -webkit-appearance: none;
     margin-top: -8.6px;
   }
-  input[type=range].seq-slider:focus::-webkit-slider-runnable-track {
-    background: #05d8d8;
-  }
   input[type=range].seq-slider::-moz-range-track {
     width: 100%;
     height: 6.8px;
@@ -162,12 +159,6 @@ div.seq
     background: #ffffff;
     cursor: pointer;
     height: 6.8px;
-  }
-  input[type=range].seq-slider:focus::-ms-fill-lower {
-    background: $tack-bg;
-  }
-  input[type=range].seq-slider:focus::-ms-fill-upper {
-    background: #05d8d8;
   }
 
 
