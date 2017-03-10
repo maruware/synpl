@@ -1,6 +1,6 @@
 <template lang="pug">
   div.frame
-    video(v-bind:src="content.video.src", v-on:timeupdate="videoTimeUpdate")
+    video(v-bind:src="content.video.src", @timeupdate="videoTimeUpdate", @ended="videoEnded")
 
 </template>
 
@@ -23,6 +23,9 @@
     methods: {
       videoTimeUpdate (e) {
         this.$store.dispatch('videoAdvanced', e.target.currentTime)
+      },
+      videoEnded (e) {
+        this.$store.dispatch('stop')
       }
     }
 
