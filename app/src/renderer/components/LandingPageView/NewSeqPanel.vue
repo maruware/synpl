@@ -1,23 +1,37 @@
 <template lang="pug">
-  div._new-seq-panel(v-on:dragover="fileDragging" v-on:drop="fileDropped")
-    p Drag video or photos here
+  div._new-seq-panel(@dragenter="enter", @dragover="dragging", @drop="dropped", @dragleave="leave")
+    p(v-if="!isDragging") Drag video or photos here
+    p(v-else) Drop
 </template>
 
 <script>
   export default {
-    computed: {
-
+    data () {
+      return {
+        isDragging: false
+      }
     },
     methods: {
-      fileDragging (e) {
+      enter (e) {
         e.stopPropagation()
         e.preventDefault()
+        this.isDragging = true
+      },
+      leave (e) {
+        e.stopPropagation()
+        e.preventDefault()
+        this.isDragging = false
+      },
+      dragging (e) {
+        e.stopPropagation()
+        e.preventDefault()
+        this.isDragging = true
         e.dataTransfer.dropEffect = 'copy'
       },
-      fileDropped (e) {
-        console.log('fileDropped', e.dataTransfer.getData('Text'))
+      dropped (e) {
         e.stopPropagation()
         e.preventDefault()
+        this.isDragging = false
 
         const text = e.dataTransfer.getData('Text')
         if (text) {
