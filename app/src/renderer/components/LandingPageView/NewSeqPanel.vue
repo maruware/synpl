@@ -34,20 +34,28 @@
         this.isDragging = false
 
         const text = e.dataTransfer.getData('Text')
+
+        let contentPromise = null
         if (text) {
-          this.$prompt('Input date', 'Tip', {
+          contentPromise = this.$prompt('Input date', 'Tip', {
             confirmButtonText: 'OK',
             cancelButtonText: 'Cancel'
           })
           .then(r => {
             const date = new Date(r.value)
-            this.$store.dispatch('setContentWithText', { text, date })
+            return this.$store.dispatch('setContentWithText', { text, date })
           })
         } else {
           const files = e.dataTransfer.files
           console.log('files', files)
-          this.$store.dispatch('setContentWithFiles', files)
+          contentPromise = this.$store.dispatch('setContentWithFiles', files)
         }
+
+        contentPromise
+        .catch(err => {
+          console.error('err', err)
+          this.$message.error(err.msg || 'Error')
+        })
       }
     }
   }

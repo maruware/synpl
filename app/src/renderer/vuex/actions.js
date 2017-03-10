@@ -119,11 +119,10 @@ export const setContentWithText = ({ commit }, { text, date }) => {
     console.log('match')
     contentPromise = youtubeContent(text, date)
   } else {
-    window.alert('Bad URL')
-    return
+    return Promise.reject({msg: 'Bad URL'})
   }
 
-  contentPromise
+  return contentPromise
   .then(content => {
     content = setContentDefault(content)
     commit(types.SET_CONTENT, {content: content})
@@ -141,10 +140,11 @@ export const setContentWithFiles = ({ commit }, files) => {
   } else if (files.every(f => f.type === 'image/jpeg')) {
     contentPromise = photoContentPromise(files)
   } else {
-    window.alert('Bad File')
-    return
+    commit(types.CHANGE_LOADING, {loading: false})
+    return Promise.reject({msg: 'Bad File'})
   }
-  contentPromise
+
+  return contentPromise
   .then(content => {
     content = setContentDefault(content)
     commit(types.SET_CONTENT, {content: content})
