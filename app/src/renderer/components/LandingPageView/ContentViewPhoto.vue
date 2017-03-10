@@ -64,14 +64,14 @@
 <style scoped lang="scss">
   .frame {
     width: 100%;
-    position: relative;
+    height: 100%;
+    text-align: center;
 
     img {
-      width: 100%;
+      width: auto;
       height: auto;
-      position: absolute;
-      left: 0;
-      top: 0;
+      max-width: 100%;
+      max-height: 100%;
     }
   }
 </style>
