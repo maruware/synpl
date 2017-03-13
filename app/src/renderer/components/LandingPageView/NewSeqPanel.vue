@@ -1,7 +1,8 @@
 <template lang="pug">
   div._new-seq-panel(@dragenter="enter", @dragover="dragging", @drop="dropped", @dragleave="leave")
-    span(v-if="!isDragging") Drag video or photos here
-    span(v-else) Drop
+    div.dash-line
+      span(v-if="!isDragging") Drag video or photos here
+      span(v-else) Drop
 </template>
 
 <script>
@@ -69,6 +70,18 @@
     text-align: center;
     font-size: 20pt;
     color: #555555;
+
+    position: relative;
+
+    .dash-line {
+      position: absolute;
+      box-sizing:border-box;
+      left: 2px;
+      top: 2px;
+      width: calc(100% - 4px);
+      height: calc(100% - 4px);
+      border: dashed 1px;
+    }
 
     span {
       height: 100%;
