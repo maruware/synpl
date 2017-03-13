@@ -59,7 +59,6 @@ ipcMain.on('requestFileExif', (event, arg) => {
       console.error('Exif error')
       sender.send(`errorFileExif-${path}`, err)
     } else {
-      console.log('metadata', metadata)
       const res = {
         date: metadata.mediaCreateDate || metadata['date/timeOriginal'],
         duration: metadata.mediaDuration || null,
