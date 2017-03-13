@@ -1,7 +1,7 @@
 <template lang="pug">
   div.seq-settings
     el-dialog(title="Settings" v-model="visible")
-      el-form(ref="form")
+      el-form(ref="form" @submit="disableFormSubmit")
         el-form-item(label="Offset", :label-width="formLabelWidth")
           el-input(v-model="offset")
       span.dialog-footer(slot="footer")
@@ -23,6 +23,9 @@
       this.offset = this.content.offset
     },
     methods: {
+      disableFormSubmit () {
+        return false
+      },
       cancel () {
         this.$emit('cancel')
       },
