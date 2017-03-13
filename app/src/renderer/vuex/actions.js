@@ -110,7 +110,7 @@ const setContentDefault = (content) => {
   })
 }
 
-export const setContentWithText = ({ commit }, { text, date }) => {
+export const setContentWithText = ({ commit, state }, { text, date }) => {
   const contentPromise = youtubeContent(text, date)
 
   return contentPromise
@@ -120,17 +120,32 @@ export const setContentWithText = ({ commit }, { text, date }) => {
   })
 }
 
-export const setContentWithFiles = ({ commit }, files) => {
-  console.log('setContent files', files)
+export const setContent = ({ commit, state }, params) => {
   commit(types.CHANGE_LOADING, {loading: true})
+
+  const files = params.files
+  const text = params.text
+
   let contentPromise = null
-  // video
-  if (files.length === 1 && dummyVideo.canPlayType(files[0].type)) {
-    const file = files[0]
-    contentPromise = videoContentPromise(file)
-  } else if (files.every(f => f.type === 'image/jpeg')) {
-    contentPromise = photoContentPromise(files)
+
+  // First item must be video or youtube
+  if (state.contents.items.length === 0) {
+    if (files && files.length === 1 && dummyVideo.canPlayType(files[0].type)) {
+      // Video
+      const file = files[0]
+      contentPromise = videoContentPromise(file)
+    } else if (text) {
+      // Youtube
+      const date = params.date
+      contentPromise = youtubeContent(text, date)
+    }
   } else {
+    if (files.every(f => f.type === 'image/jpeg')) {
+      // Photo
+      contentPromise = photoContentPromise(files)
+    }
+  }
+  if (contentPromise === null) {
     commit(types.CHANGE_LOADING, {loading: false})
     return Promise.reject({msg: 'Bad File'})
   }

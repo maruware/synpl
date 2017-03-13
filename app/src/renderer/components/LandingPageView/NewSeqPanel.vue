@@ -1,17 +1,23 @@
 <template lang="pug">
   div._new-seq-panel(@dragenter="enter", @dragover="dragging", @drop="dropped", @dragleave="leave")
     div.dash-line
-      span(v-if="!isDragging") Drag video or photos here
+      span(v-if="!isDragging")
+        span(v-if="noContents") Drag video or youtube here
+        span(v-else) Drag photos here
       span(v-else) Drop
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
   export default {
     data () {
       return {
         isDragging: false
       }
     },
+    computed: mapGetters({
+      noContents: 'noContents'
+    }),
     methods: {
       enter (e) {
         e.stopPropagation()
@@ -44,12 +50,12 @@
           })
           .then(r => {
             const date = new Date(r.value)
-            return this.$store.dispatch('setContentWithText', { text, date })
+            return this.$store.dispatch('setContent', { text, date })
           })
         } else {
           const files = e.dataTransfer.files
           console.log('files', files)
-          contentPromise = this.$store.dispatch('setContentWithFiles', files)
+          contentPromise = this.$store.dispatch('setContent', { files })
         }
 
         contentPromise
