@@ -1,61 +1,51 @@
 <template lang="pug">
   div.frame
-    img(v-bind:src="currentSrc")
+    img(v-bind:src="photoSrc")
 </template>
 
 <script>
-  const findMin = (ary, fn) => {
-    let minElem = null
-    let minVal = Infinity
-    let minIdx = 0
-    ary.forEach((e, i) => {
-      const v = fn(e)
-      if (v < minVal) {
-        minVal = v
-        minElem = e
-        minIdx = i
-      }
-    })
-    return {e: minElem, v: minVal, i: minIdx}
-  }
+  import _ from 'lodash'
+  
   export default {
     props: ['content', 'currentTime', 'startAt', 'duration'],
     data () {
       return {
-        photoIdx: -1
+        photoSrc: null
       }
     },
     created () {
       this.$store.watch(state => state.contents.currentTime, (curr) => {
         const offset = this.content.offset
-        const t = new Date(this.startAt.getTime() + Math.round(curr * 1000))
-        const {e, v, i} = findMin(this.content.photos, p => {
-          const diff = Math.abs(p.metadata.date - t + (offset * 1000))
-          return diff
+        const worldDate = new Date(this.startAt.getTime() + Math.round(curr * 1000))
+        let photoWithDiffs = this.content.photos.map((p) => {
+          const photoDate = new Date(p.metadata.date.getTime() + (offset * 1000))
+          let diff = worldDate - photoDate
+          return {
+            photo: p,
+            diff
+          }
         })
-        // Not match
-        if (v > 300) {
-          this.photoIdx = -1
+        photoWithDiffs = photoWithDiffs.filter((pd) => {
+          return pd.diff >= 0 && pd.diff < 800
+        })
+        if (photoWithDiffs.length === 0) {
+          this.photoSrc = null
           return
         }
-
-        if (this.photoIdx === i) {
+        const nearest = _.minBy(photoWithDiffs, pd => pd.diff).photo
+        if (nearest.src === this.photoSrc) {
           return
         }
-
-        this.photoIdx = i
+        this.photoSrc = nearest.src
         if (this.content.stepSuspend) {
           this.$store.dispatch('pause')
-          this.$store.dispatch('seek', (e.metadata.date - this.startAt.getTime()) / 1000 + offset)
+          this.$store.dispatch('seek', (nearest.metadata.date - this.startAt.getTime()) / 1000 + offset)
         }
       })
     },
     computed: {
       currentSrc () {
-        if (this.photoIdx < 0) {
-          return ''
-        }
-        return this.content.photos[this.photoIdx].src
+        return this.photo ? this.photo.src : ''
       }
     }
   }
