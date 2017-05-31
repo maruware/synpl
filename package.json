@@ -1,6 +1,6 @@
 {
   "name": "synpl",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Sync play videos and photos",
   "scripts": {
     "build": "npm run pack && build",
